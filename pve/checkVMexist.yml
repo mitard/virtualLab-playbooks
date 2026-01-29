@@ -1,0 +1,20 @@
+- name: Vérification de l'existence d'une VM (par son nom)
+  hosts: "{{ pve_api_host }}"
+  gather_facts: no
+
+  tasks:
+    - name: Recherche de l'existence d'une VM
+      community.proxmox.proxmox_vm_info:
+        node: "{{ pve_api_host }}"
+        api_host: "{{ pve_api_host }}"
+        api_user: "{{ pve_api_user }}"
+        api_token_id: "{{ pve_api_token_id }}"
+        api_token_secret: "{{ pve_api_token_secret }}"
+        name: "{{ VM_name }}"
+      register: vminfos
+
+    - name: Affichage du résultat
+      ansible.builtin.debug:
+        msg:
+        - "{{ vminfos.proxmox_vms }}"
+      when: vminfos.proxmox_vms | length > 0

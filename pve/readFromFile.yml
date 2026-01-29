@@ -1,0 +1,9 @@
+- name: Lecture d'entrée dans un fichier
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Lecture du fichiers {{ input }}
+      ansible.builtin.debug:
+        msg: "{{ item.split(',').0 }} {{ item.split(',').1 }}"
+      loop: "{{ lookup('file', vnets).splitlines() }}"

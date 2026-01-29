@@ -1,0 +1,12 @@
+- name: Exécution d'un script sur la machine
+  hosts: "{{ target }}"
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Attente d'une éventuelle fin de redémarrage
+      wait_for_connection:
+        timeout: 120
+
+    - name: Execution du script sur la machine
+      ansible.builtin.command: "{{ cmd }}"

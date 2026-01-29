@@ -1,0 +1,11 @@
+- name: Copie de scripts de configuration
+  hosts: "{{ target }}"
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Copie des fichiers de configuration sur le routeur
+      copy:
+        src: /home/ansible/configurationFiles/clients-vrf-conf.sh
+        dest: /usr/local/bin/clients-vrf-conf.sh
+        mode: '0755'

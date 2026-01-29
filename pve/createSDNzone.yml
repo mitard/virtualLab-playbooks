@@ -1,0 +1,14 @@
+- name: Création d'une zone réseau pour le Pod {{ PodID }}
+  hosts: "{{ pve_api_host }}"
+  gather_facts: no
+
+  tasks:
+    - name: Création de la zone vSwPod{{ PodID }}
+      proxmox_sdn_zones:
+        api_host: "{{ pve_api_host }}"
+        api_user: "{{ pve_api_user }}"
+        api_token_id: "{{ pve_api_token_id }}"
+        api_token_secret: "{{ pve_api_token_secret }}"
+        zone: "vSwPod{{ PodID }}"
+        type: simple
+        state: present

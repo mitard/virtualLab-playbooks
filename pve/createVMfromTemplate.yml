@@ -1,0 +1,13 @@
+  - name: Création à partir du modèle de VM
+    community.proxmox.proxmox_kvm:
+      #      vmid: 3002    # ID du modèle de VM
+      node: "{{ pve_api_host }}"
+      api_host: fluff
+      api_user: ansible@pam
+      api_token_id: APItoken
+      api_token_secret: 44f7c351-05c4-493f-b53c-fe19e2b3e87d
+      clone: tmpl-rtr-Deb12
+      full: yes
+      name: "{{ VM_name }}"
+      storage: local-lvm
+      state: present

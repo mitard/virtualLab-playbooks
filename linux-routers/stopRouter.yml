@@ -1,0 +1,8 @@
+- name: Arrêt de la VM
+  hosts: "{{ target }}"
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Execution d'un 'shutdown' sur la VM
+      community.general.shutdown:

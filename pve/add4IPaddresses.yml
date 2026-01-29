@@ -1,0 +1,20 @@
+- name: Ajout de 4 interfaces réseaux à une VM
+  hosts: "{{ pve_api_host }}"
+  gather_facts: no
+
+  tasks:
+    - name: Ajout de 4 interfaces réseaux à la VM "{{ VM_name }}"
+      community.proxmox.proxmox_kvm:
+        node: "{{ pve_api_host }}"
+        api_host: "{{ pve_api_host }}"
+        api_user: "{{pve_api_user }}"
+        api_token_id: "{{ pve_api_token_id }}"
+        api_token_secret: "{{ pve_api_token_secret }}"
+        name: "{{ VM_name }}"
+        net:
+          net1: "virtio,bridge={{ VMnet1 }}"
+          net2: "virtio,bridge={{ VMnet2 }}"
+          net3: "virtio,bridge={{ VMnet3 }}"
+          net4: "virtio,bridge={{ VMnet4 }}"
+        update: true
+        update_unsafe: true

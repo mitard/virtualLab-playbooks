@@ -1,0 +1,11 @@
+- name: Copie de la configuration FRR par défaut
+  hosts: "{{ target }}"
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Copie du fichier frr.conf sur le routeur
+      copy:
+        src: /home/ansible/configurationFiles/{{ ansible_hostname }}{{ suffix }}.cfg
+        dest: /etc/frr/frr.conf
+#        mode: '0640'

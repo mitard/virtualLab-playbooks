@@ -1,0 +1,17 @@
+- name: Création des réseaux virtuels du Pod "{{ PodID }}"
+  hosts: "{{ pve_api_host }}"
+  gather_facts: no
+
+  tasks:
+    - name: Création des VNets du Pod "{{ PodID }}"
+      proxmox_sdn_vnets:
+        api_host: "{{ pve_api_host }}"
+        api_user: "{{ pve_api_user }}"
+        api_token_id: "{{ pve_api_token_id }}"
+        api_token_secret: "{{ pve_api_token_secret }}"
+        vnet: "P{{ PodID }}{{ item.split(',').0 }}{{ item.split(',').1 }}"
+        alias: "Pod{{ PodID }}{{ item.split(',').0 }}/{{ item.split(',').1 }}"
+        zone: vSwPod{{ PodID }}
+          #        vlanaware: false
+        state: present
+      loop: "{{ lookup('file', vnets).splitlines() }}"

@@ -1,0 +1,14 @@
+- name: Création de l'utilisateur 'student' sur la VM
+  hosts: "{{ target }}"
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Création de l'utilisateur
+      user:
+        name: student
+        password: "{{ 'lab' | password_hash('sha512') }}"
+        state: present
+        createhome: no
+        shell: /bin/vtysh
+        groups: frrvty

@@ -1,0 +1,14 @@
+- name: Création de l'utilisateur 'admin' sur la VM
+  hosts: "{{ target }}"
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Création de l'utilisateur
+      user:
+        name: admin
+        password: "{{ 'router' | password_hash('sha512') }}"
+        state: present
+        createhome: yes
+        shell: /bin/bash
+        groups: sudo

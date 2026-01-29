@@ -1,0 +1,11 @@
+- name: Sauvegarde de la configuration FRR courante enregistrée
+  hosts: "{{ target }}"
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Sauvegarde du fichier frr.conf du routeur
+      fetch:
+        src: /etc/frr/frr.conf
+        dest: "/home/ansible/configurationFiles/{{ ansible_hostname }}{{ suffix }}.cfg"
+        flat: yes

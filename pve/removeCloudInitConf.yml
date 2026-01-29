@@ -1,0 +1,26 @@
+- name: Suppression de la configuration Cloud-Init nécessaire au premier démarrage
+  hosts: "{{ pve_api_host }}"
+  gather_facts: no
+
+  tasks:
+    - name: Arrêt de la VM
+      include_role:
+        name: stopVM
+      vars:
+        pve_api_host: "{{ pve_api_host }}"
+        pve_api_user: "{{ pve_api_user }}"
+        pve_api_token_id: "{{ pve_api_token_id }}"
+        pve_api_token_secret: "{{ pve_api_token_secret }}"
+        VM_name: "{{ item }}"
+      loop: "{{ VM_list.split() }}"
+
+    - name: Suppression du disk de démarrage Cloud-Init
+      community.proxmox.proxmox_disk:
+        api_host: "{{ pve_api_host }}"
+        api_user: "{{ pve_api_user }}"
+        api_token_id: "{{ pve_api_token_id }}"
+        api_token_secret: "{{ pve_api_token_secret }}"
+        name: "{{ item }}"
+        disk: ide2
+        state: absent
+      loop: "{{ VM_list.split() }}"

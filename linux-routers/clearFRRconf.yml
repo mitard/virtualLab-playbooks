@@ -1,0 +1,10 @@
+- name: Suppression de la configuration FRR par défaut
+  hosts: "{{ target }}"
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Suppression du fichier frr.conf sur le routeur
+      ansible.builtin.file:
+        path: /etc/frr/frr.conf
+        state: absent

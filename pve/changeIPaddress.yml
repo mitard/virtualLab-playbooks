@@ -1,0 +1,25 @@
+- name: Création d'une VM (sous réserve quelle n'existe pas déjà)
+  hosts: "{{ pve_api_host }}"
+  gather_facts: no
+
+  tasks:
+    - name: Recherche de l'existence de la VM "{{ VM_name }}"
+      community.proxmox.proxmox_vm_info:
+        node: "{{ pve_api_host }}"
+        api_host: "{{ pve_api_host }}"
+        api_user: "{{ pve_api_user }}"
+        api_token_id: "{{ pve_api_token_id }}"
+        api_token_secret: "{{ pve_api_token_secret }}"
+        name: "{{ VM_name }}"
+      register: vminfos
+
+    - name: Initialisation de l'adresse IP de la VM "{{ VM_name }}"
+      include_role:
+        name: setVMipAddress
+      vars:
+        pve_node: "{{ pve_api_host }}"
+        pve_api_host: "{{ pve_api_host }}"
+        pve_api_user: "{{pve_api_user }}"
+        pve_api_token_id: "{{ pve_api_token_id }}"
+        pve_api_token_secret: "{{ pve_api_token_secret }}"
+      when: vminfos.proxmox_vms | length > 0

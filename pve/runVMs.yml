@@ -1,0 +1,24 @@
+- name: Gestion de l'état d'un ensemble de machine
+  hosts: "{{ pve_api_host }}"
+  gather_facts: no
+
+  tasks:
+    - name: Récupération de la liste des VMs portées par l'hyperviseur
+      community.proxmox.proxmox.proxmox_vm_info:
+        node: "{{ pve_api_host }}"
+        api_host: "{{ pve_api_host }}"
+        api_user: "{{ pve_api_user }}"
+        api_token_id: "{{ pve_api_token_id }}"
+        api_token_secret: "{{ pve_api_token_secret }}"
+      register: vminfos
+
+    - name: Exécution de l'action sur les VMs
+      community.proxmox.proxmox.proxmox_kvm:
+        api_host: "{{ pve_api_host }}"
+        api_user: "{{ pve_api_user }}"
+        api_token_id: "{{ pve_api_token_id }}"
+        api_token_secret: "{{ pve_api_token_secret }}"
+        name: "{{ item.name }}"
+        state: "{{ status }}"
+      loop: "{{ vminfos.proxmox_vms }}"
+      when: item.name | regex_search(pattern)

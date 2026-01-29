@@ -1,0 +1,8 @@
+- name: Création de la VRF de management sur la VM
+  hosts: "{{ target }}"
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Execution du script de configuration sur la machine
+      shell: /usr/local/bin/mgmt-vrf-conf.sh

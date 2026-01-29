@@ -1,0 +1,9 @@
+  - name: Démarrage de la VM "{{ VM_name }}"
+    community.proxmox.proxmox_kvm:
+      node: "{{ pve_node }}"
+      api_host: "{{ pve_api_host }}"
+      api_user: "{{ pve_api_user }}"
+      api_token_id: "{{ pve_api_token_id }}"
+      api_token_secret: "{{ pve_api_token_secret }}"
+      name: "{{ VM_name }}"
+      state: started
