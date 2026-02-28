@@ -11,6 +11,7 @@
         api_token_id: "{{ pve_api_token_id }}"
         api_token_secret: "{{ pve_api_token_secret }}"
         name: "{{ VM_name }}"
+        validate_certs: false
       register: vminfos
 
     - name: Affichage du résultat
