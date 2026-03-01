@@ -10,6 +10,7 @@
         api_user: "{{ pve_api_user }}"
         api_token_id: "{{ pve_api_token_id }}"
         api_token_secret: "{{ pve_api_token_secret }}"
+        validate_certs: false
       register: vminfos
 
     - name: Démarrage des VMs
