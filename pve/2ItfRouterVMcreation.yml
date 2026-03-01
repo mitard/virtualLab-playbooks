@@ -10,6 +10,7 @@
         api_token_id: "{{ pve_api_token_id }}"
         api_token_secret: "{{ pve_api_token_secret }}"
         name: "{{ VM_name }}"
+        validate_certs: false
       register: vminfos
 
     - name: Création de la VM "{{ VM_name }}" à partir du modèle "{{ template_name }}"
