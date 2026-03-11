@@ -6,6 +6,5 @@
   tasks:
     - name: Copie du fichier frr.conf sur le routeur
       copy:
-        src: /home/ansible/configurationFiles/{{ ansible_hostname }}{{ suffix }}.cfg
+        src: /home/ansible/scripts/cfgFiles/{{ ansible_hostname|split('-')|last }}{{ suffix }}.cfg
         dest: /etc/frr/frr.conf
-#        mode: '0640'
