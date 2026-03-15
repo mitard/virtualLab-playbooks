@@ -1,0 +1,9 @@
+- name: Initialisation de la bannière post-connexion sur un routeur FRR
+  hosts: "{{ target }}"
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Initialisation du fichier /etc/frr/banner
+      ansible.builtin.shell:
+        cmd: figlet -f standard -c {{ ansible_hostname }} > /etc/frr/banner
