@@ -37,7 +37,19 @@
         pve_api_token_secret: "{{ pve_api_token_secret }}"
       when: vminfos.proxmox_vms | length == 0
 
-    - name: Ajout de 3 interfaces réseaux à la VM "{{ VM_name }}"
+    - name: Initialisation des étiquettes de la VM "{{ VM_name }}"
+      include_role:
+        name: setTags
+      vars:
+        pve_node: "{{ pve_api_host }}"
+        pve_api_host: "{{ pve_api_host }}"
+        pve_api_user: "{{pve_api_user }}"
+        pve_api_token_id: "{{ pve_api_token_id }}"
+        pve_api_token_secret: "{{ pve_api_token_secret }}"
+        labels: "{{ etiquettes | default('vLab') }}"
+      when: vminfos.proxmox_vms | length == 0
+
+    - name: Ajout de 2 interfaces réseaux à la VM "{{ VM_name }}"
       include_role:
         name: add2IPaddresses
       vars:

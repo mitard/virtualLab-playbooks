@@ -37,6 +37,18 @@
         pve_api_token_secret: "{{ pve_api_token_secret }}"
       when: vminfos.proxmox_vms | length == 0
 
+    - name: Initialisation des étiquettes de la VM "{{ VM_name }}"
+      include_role:
+        name: setTags
+      vars:
+        pve_node: "{{ pve_api_host }}"
+        pve_api_host: "{{ pve_api_host }}"
+        pve_api_user: "{{pve_api_user }}"
+        pve_api_token_id: "{{ pve_api_token_id }}"
+        pve_api_token_secret: "{{ pve_api_token_secret }}"
+        tags: "{{ tags | default('vLab') }}"
+      when: vminfos.proxmox_vms | length == 0
+
     - name: Démarrage VM "{{ VM_name }}"
       include_role:
         name: startVM
