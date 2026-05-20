@@ -23,4 +23,5 @@
         name: "{{ item }}"
         disk: ide2
         state: absent
+        validate_certs: false
       loop: "{{ VM_list.split() }}"
