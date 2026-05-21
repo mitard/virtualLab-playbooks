@@ -1,9 +1,8 @@
 - name: Initialisation de la bannière post-connexion SSH sur un routeur
   hosts: "{{ target }}"
   become: yes
-  gather_facts: yes
 
   tasks:
     - name: Initialisation du fichier /etc/ssh/ssh_banner
       ansible.builtin.shell:
-        cmd: figlet -f small -c {{ ansible_hostname }} > /etc/ssh/ssh_banner
+        cmd: figlet -f small -c {{ bannerTxt }} > /etc/ssh/ssh_banner
